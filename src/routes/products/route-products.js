@@ -1,9 +1,8 @@
 import { Router } from 'express'
 const router = Router();
-// const { default: productNew } = require("../../Api-class/products");
-import product from "../../Api-class/products";
+import product from "../../Api-class/controllers/products.js";
 
-const multer = require("multer");
+import multer from "multer";
 
 // Multer - subir archivos
 const storage = multer.diskStorage({
@@ -72,13 +71,8 @@ router.get("/:id?", async (req, res) => {
 router.post("/", adminOrClient, async (req, res) => {
 	try {
 		const productNew = req.body;
-		// const image = req.file;
-		// const obj = { title, price, thumbnail: `../../files/${image.filename}` };
-		const addProduct = await product.save(productNew);
+		const addProduct = await product.insertProduct(productNew);
 		return res.json({ agregado: addProduct })
-		//return res.render("index",{ Agregado: productAdd });
-		// return res.redirect("/productos");
-
 	} catch (error) {
 		console.log(error);
 	}
@@ -110,14 +104,8 @@ router.put("/:id", adminOrClient, existProduct, noProductError, async (req, res)
 	try {
 		const { id } = req.params;
 		const newProduct = req.body;
-		console.log(newProduct)
-		const obj = {
-			...newProduct,
-			id: Number(id),
-		};
-		console.log(obj)
-		let productUpload = await product.update(obj);
-		res.json({ productUpload });
+		let productUpload = await product.update(newProduct, id);
+		res.json({ Agregado: productUpload });
 	} catch (error) {
 		console.log(error);
 	}
@@ -128,7 +116,7 @@ router.delete("/:id", adminOrClient, existProduct, noProductError, async (req, r
 	try {
 		const { id } = req.params;
 		let productDelete = await product.deleteById(Number(id));
-		return res.json({ Productos: productDelete });
+		return res.json({ Eliminado: productDelete });
 	} catch (error) {
 		console.log(error);
 	}
@@ -136,4 +124,4 @@ router.delete("/:id", adminOrClient, existProduct, noProductError, async (req, r
 
 
 
-module.exports = router;
+export default router;

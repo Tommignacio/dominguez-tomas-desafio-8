@@ -1,9 +1,9 @@
 import { Router } from 'express'
-const router = Router()
-const cart = require('../../Api-class/cart')
+const routerCart = Router()
+import cart from '../../Api-class/controllers/cart.js'
 
 
-router.post("/", async (req, res) => {
+routerCart.post("/", async (req, res) => {
     try {
         const cartNew = await cart.createCart();
         return res.json(cartNew)
@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
 
 })
 
-router.delete("/:id/productos", async (req, res) => {
+routerCart.delete("/:id/productos", async (req, res) => {
     const { id } = req.params
     const cartDelete = await cart.deleteById(id)
     console.log(cartDelete)
@@ -21,7 +21,7 @@ router.delete("/:id/productos", async (req, res) => {
 })
 
 //muestra lista de productos en un carrito
-router.get("/:id/productos", async (req, res) => {
+routerCart.get("/:id/productos", async (req, res) => {
     try {
         const { id } = req.params
         const allProducts = await cart.showProducts(id)
@@ -33,7 +33,7 @@ router.get("/:id/productos", async (req, res) => {
 })
 
 //agrega producto por su id a un carrito
-router.post("/:id/productos", async (req, res) => {
+routerCart.post("/:id/productos", async (req, res) => {
     const { id } = req.params
     const idProducts = req.body
     const cartAdd = await cart.addProducts(id, idProducts)
@@ -41,7 +41,7 @@ router.post("/:id/productos", async (req, res) => {
 })
 
 //elimina producto del carrito
-router.delete("/:id/productos/:id_prod", async (req, res) => {
+routerCart.delete("/:id/productos/:id_prod", async (req, res) => {
     const { id, id_prod } = req.params
     const delProduct = await cart.deleteProduct(id, id_prod)
     return res.json({ eliminado: delProduct })
@@ -57,4 +57,4 @@ router.delete("/:id/productos/:id_prod", async (req, res) => {
 
 // })
 
-module.exports = router
+export default routerCart

@@ -1,13 +1,16 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const { Server: ioServer } = require("socket.io");
-const http = require("http");
-const morgan = require("morgan");
-const routes = require("./routes/index-routes.js");
+import { Server as ioServer } from "socket.io";
+import http from "http";
+import morgan from "morgan";
+import routes from "./routes/index-routes.js";
 
+//importo path para poder usar __dirname
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-//clase con metdodos para los productos
-// const products = require("./container.js");
 
 //creo servidores
 const httpServer = http.createServer(app); //creo servidor http

@@ -1,30 +1,24 @@
-import container from "./container";
-import product from "./products";
-import fs from "fs"
+import container from "./container.js";
+import product from "./products.js";
+import { options } from "../../config/configDB.js";
 
 
 class Cart extends container {
     constructor() {
-        super(`${__dirname}/dataBase/cart.json`)
+        //paso las opciones y el nombre de la tabla
+        super(options.mariaDB, "cart")
     }
 
     async createCart() {
         try {
-            //lee el archivo
-            let res = await this.read();
-            //crea nueva id
-            const id = this.generateId(res);
-            const oldObj = { id: 1 }
-            const newObj = { ...oldObj, id: 2, nombre: "nuevo" }
-            console.log([oldObj, newObj])
-            const cart = {
-                id: id,
-                timeStamp: this.getNow(),
-                productos: []
-            };
-            res.push(cart)
-            this.write(JSON.stringify(res))
-            return res
+            // const cart = 
+            const newCart = await this.knex.from(this.table)
+                .insert({
+                    timestamp: this.getNow(),
+
+                })
+            console.log(newCart)
+            return newCart
         } catch (error) {
             console.log(error)
         }
@@ -162,4 +156,4 @@ class Cart extends container {
 }
 
 const cart = new Cart()
-module.exports = cart
+export default cart
