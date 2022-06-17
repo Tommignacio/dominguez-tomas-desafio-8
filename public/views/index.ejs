@@ -9,14 +9,9 @@
 </head>
 
 <body>
-	<header>
-		<%- include("./partials/header")%>
-	</header>
-	<%- include("./partials/form") %>
-		<%-include( "./partials/list-products" )%>
-			<%-include( "./partials/chat" )%>
-				<script src="/socket.io/socket.io.js"></script>
-				<script src="../main.js"></script>
+	<%-include( "./partials/chat" )%>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="../js/main.js"></script>
 </body>
 
 </html>

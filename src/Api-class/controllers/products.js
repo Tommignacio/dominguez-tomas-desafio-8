@@ -1,4 +1,4 @@
-import { options } from "../../config/configDB.js";
+import { options } from "../../dataBase/config/configDB.js";
 import container from "./container.js"
 
 
@@ -6,16 +6,6 @@ class Products extends container {
     constructor() {
         //paso las opciones y el nombre de la tabla
         super(options.mariaDB, "products")
-    }
-
-    async insertProduct(obj) {
-        try {
-            const addProduct = await this.knex.from(this.table)
-                .insert(obj)
-            return addProduct;
-        } catch (error) {
-            throw new Error(`Error al insertar: ${error}`);
-        }
     }
 
     //devuelve el producto por su ID

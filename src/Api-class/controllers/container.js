@@ -16,6 +16,16 @@ export default class Container {
 			throw new Error(`Error: ${error}`);
 		}
 	}
+	//insertar elemento en base de datos
+	async insertElement(obj) {
+		try {
+			const addElement = await this.knex.from(this.table)
+				.insert(obj)
+			return addElement;
+		} catch (error) {
+			throw new Error(`Error al insertar: ${error}`);
+		}
+	}
 
 	//elimina objeto por su id
 	async deleteById(id) {

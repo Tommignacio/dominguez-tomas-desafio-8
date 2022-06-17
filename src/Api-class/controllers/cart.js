@@ -1,6 +1,6 @@
 import container from "./container.js";
 import product from "./products.js";
-import { options } from "../../config/configDB.js";
+import { options } from "../../dataBase/config/configDB.js";
 
 
 class Cart extends container {

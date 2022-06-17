@@ -1,5 +1,13 @@
 import "dotenv/config"
 
+//importo path para poder usar __dirname
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
 export const options = {
     mariaDB: {
         client: "mysql",
@@ -14,9 +22,10 @@ export const options = {
     sqlite: {
         client: "sqlite3",
         connection: {
-            // filename: "./db.sqlite",
-            filename: "../dataBase/ecommerce.sqlite"
+            filename: (__dirname + "/ecommerce.sqlite")
         },
         useNullAsDefault: true,
     }
+
 }
+console.log(__dirname)

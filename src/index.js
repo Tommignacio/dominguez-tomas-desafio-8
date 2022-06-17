@@ -4,10 +4,13 @@ import { Server as ioServer } from "socket.io";
 import http from "http";
 import morgan from "morgan";
 import routes from "./routes/index-routes.js";
+import chat from "./Api-class/controllers/chat.js";
+
 
 //importo path para poder usar __dirname
 import path from 'path';
 import { fileURLToPath } from 'url';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -24,7 +27,6 @@ app.use(express.urlencoded({ extended: true })); //sirve para leer los datos env
 
 //middleware error
 const ruteError = async function (req, res, next) {
-	console.log(req)
 	//mensaje de error al no existir la ruta
 	return res
 		.status(404)
@@ -37,24 +39,23 @@ app.set("view engine", "ejs");
 
 //Rutas
 app.use("/", routes);
-app.use("/*", ruteError)
+
 
 //array de mensajes
-const messages = []
+// const messages = []
 
 //servidor socket para chat
 io.on("connection", (socket) => {
 	console.log("servidor conectado")
-	console.log(socket.id)
-	socket.on("newMessage", (objMessage) => {
-		console.log(objMessage)
-		messages.push(objMessage)
+	socket.on("newMessage", async (objMessage) => {
+		// console.log(objMessage)
+		await chat.insertElement(objMessage)
+		socket.emit("messages", objMessage)
 	})
-	socket.emit("messages", messages)
 
 })
 
-
+app.use("/*", ruteError)
 
 //empezando servidor
 const PORT = 8080;

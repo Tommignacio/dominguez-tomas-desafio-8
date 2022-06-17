@@ -71,7 +71,7 @@ router.get("/:id?", async (req, res) => {
 router.post("/", adminOrClient, async (req, res) => {
 	try {
 		const productNew = req.body;
-		const addProduct = await product.insertProduct(productNew);
+		const addProduct = await product.insertElement(productNew);
 		return res.json({ agregado: addProduct })
 	} catch (error) {
 		console.log(error);

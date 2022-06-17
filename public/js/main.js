@@ -13,18 +13,20 @@ const $divMsg = d.getElementById("messages");
 
 
 d.addEventListener("DOMContentLoaded", (e) => {
-    d.addEventListener("submit", (e) => {
-        if (e.target === $form) {
-            if ($inputName.value === "" || $inputPrice.value === "") {
-                e.preventDefault();
-                let msgError;
-                if ($inputName.value === "") msgError = "Falta un nombre";
-                if ($inputPrice.value === "") msgError = "Falta un precio";
-                return ($renderMsg.innerText = msgError);
-            }
-            $renderMsg.innerText = "success";
-        }
-    });
+    // d.addEventListener("submit", (e) => {
+    //     if (e.target === $form) {
+    //         if ($inputName.value === "" || $inputPrice.value === "") {
+    //             e.preventDefault();
+    //             let msgError;
+    //             if ($inputName.value === "") msgError = "Falta un nombre";
+    //             if ($inputPrice.value === "") msgError = "Falta un precio";
+    //             return ($renderMsg.innerText = msgError);
+    //         }
+    //         $renderMsg.innerText = "success";
+    //     }
+    // });
+    console.log("hshsh")
+    //mensajes socket: click enviar mensaje
     d.addEventListener("click", (e) => {
         if (e.target === $btnSend) {
             socket.emit("newMessage", {
@@ -36,7 +38,9 @@ d.addEventListener("DOMContentLoaded", (e) => {
     });
 });
 
+//mensje socket: recibe los mensajes y los renderiza en el div message 
 socket.on("messages", (messages) => {
+    // console.log(messages)
     $divMsg.innerHTML = messages.map((message) => {
         return `<div>
                     <p> ${message.mail}</p>
